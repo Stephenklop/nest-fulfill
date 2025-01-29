@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OrderModule } from './modules/order/order.module';
-import { PaymentModule } from './modules/payment/payment.module';
-import { InventoryModule } from './modules/inventory/inventory.module';
-import { ShippingModule } from './modules/shipping/shipping.module';
+import { CqrsModule } from '@nestjs/cqrs';
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [OrderModule, PaymentModule, InventoryModule, ShippingModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    CqrsModule.forRoot(),
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
